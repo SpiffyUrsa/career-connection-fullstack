@@ -3,13 +3,20 @@ import React from "react";
 import SearchForm from "./SearchForm";
 import CompanyCard from "./CompanyCard";
 
-
+/**
+ * Renders a list of companies
+ * 
+ * Routes --> CompanyList --> {CompanyCard, SearchForm}
+ * 
+ * State
+ * 
+ * Props
+ * 
+ */
 function CompanyList(props) {
 
-
-
   return (
-    <div>
+    <div className='CompanyList'>
       <SearchForm />
       {/*  Here goes the list of CompanyCard Components */}
       <CompanyCard />

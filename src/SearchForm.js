@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 
-
+/**
+ * Renders search form
+ * 
+ * Routes --> SearchForm --> Alert
+ * 
+ * State
+ * 
+ * Props
+ * 
+ */
 function SearchForm() {
   const [formData, setFormData] = useState({});
 
@@ -21,7 +30,7 @@ function SearchForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='SearchForm'>
       <input 
         name="searchTerm" 
         value = {searchTerm} 

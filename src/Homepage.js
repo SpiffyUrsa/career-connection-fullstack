@@ -1,5 +1,15 @@
 import React from "react";
 
+/**
+ * Renders a different homepage based on logged in/out
+ * 
+ * Routes --> Homepage
+ * 
+ * State
+ * 
+ * Props
+ * 
+ */
 function Homepage(props) {
 
   return (
