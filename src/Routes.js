@@ -9,8 +9,11 @@ import SignupForm from './SignupForm'
 import ProfileForm from './ProfileForm'
 
 /**
+ * Routes all routes
+ * 
  * App --> {Navigation, Routes} -->
- * route / --> {Homepage}
+ * 
+ * route / --> Homepage
  * route /companies --> CompanyList
  * route /companies/:handle --> CompanyDetail
  * route /jobs --> JobList

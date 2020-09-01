@@ -4,6 +4,8 @@ import JobCardList from './JobCardList'
 
 
 /**
+ * Renders all jobs
+ * 
  * Routes --> Joblist --> {SearchForm, JobCardList}
  * 
  * State
