@@ -10,6 +10,9 @@ import React, { useState } from "react";
  * Props
  * 
  */
+// CR: make this form as isolated as possible - i.e. pass in
+// something applicable to any form
+
 function SearchForm() {
   const [formData, setFormData] = useState({});
 

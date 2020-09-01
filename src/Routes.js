@@ -26,6 +26,8 @@ import ProfileForm from './ProfileForm'
  * Props
  * 
  */
+
+// TODO: how do we handle error pages/redirects/home,  etc
 function Routes() {
 
   return (
