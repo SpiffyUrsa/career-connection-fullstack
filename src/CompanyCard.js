@@ -1,5 +1,6 @@
 import React from "react";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+
 
 /**
  * Renders individual details about a company
@@ -13,12 +14,14 @@ import {Link} from 'react-router-dom'
  */
 function CompanyCard({ handle, name, description, logoUrl }) {
 
+  const logoDisplay = logoUrl ? <img src={logoUrl} alt={name} /> : null;
+
   return (
     <Link exact to={`/companies/${handle}`}>
       <div className='CompanyCard'>
         <h3>{name}</h3>
         <p>{description}</p>
-        <img src={logoUrl} alt={name} />
+        {logoDisplay}
       </div>
     </Link>
   )

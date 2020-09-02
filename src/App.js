@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Routes from './Routes';
 import Navigation from './Navigation';
@@ -18,10 +17,10 @@ import { BrowserRouter } from 'react-router-dom';
 function App() {
   return (
     <div className="App">
-    <BrowserRouter>
-      <Navigation />
-      <Routes />
-    </BrowserRouter>
+      <BrowserRouter>
+        <Navigation />
+        <Routes />
+      </BrowserRouter>
     </div>
   );
 }

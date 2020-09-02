@@ -20,8 +20,8 @@ class JoblyApi {
     const url = `${BASE_URL}/${endpoint}`;
     const headers = { Authorization: `Bearer ${JoblyApi.token}` };
     const params = (method === "get")
-        ? data
-        : {};
+      ? data
+      : {};
 
     try {
       return (await axios({ url, method, data, params, headers })).data;
@@ -34,13 +34,6 @@ class JoblyApi {
 
   // Individual API routes
 
-  /** Get details on all companies. */
-
-  static async getAllCompanies() {
-    let res = await this.request("companies");
-    return res.companies;
-  }
-
   /** Get details on a company by handle. */
 
   static async getCompany(handle) {
@@ -48,17 +41,31 @@ class JoblyApi {
     return res.company;
   }
 
-  /**Filter to a list of companies matching search */
-  static async filterCompanies(searchTerm){
-    let res = await this.request(`companies?name=${searchTerm}`)
-    return res.companies
+  /** Get companies. Companies can be filtered by a search term. */
+  static async getCompanies(searchTerm) {
+    let queryString = "";
+
+    if (searchTerm !== undefined && searchTerm !== "") {
+      queryString += `?name=${searchTerm}`;
+    }
+    let res = await this.request(`companies${queryString}`);
+    return res.companies;
   }
-  
+
+  /** Get jobs. Jobs can be filtered by title. */
+  static async getJobs(searchTerm) {
+    let queryString = "";
+    if (searchTerm !== undefined && searchTerm !== "") {
+      queryString += `?title=${searchTerm}`;
+    }
+    let res = await this.request(`jobs${queryString}`);
+    return res.jobs;
+  }
 }
 
 // for now, put token ("testuser" / "password" on class)
 JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
-    "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
-    "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
+  "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
+  "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
 
 export default JoblyApi;

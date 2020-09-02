@@ -17,45 +17,28 @@ import JoblyApi from "./api.js";
 function CompanyList(props) {
   const [companies, setCompanies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isSearching, setIsSearching] = useState(false);
   const [formData, setFormData] = useState({});
 
-
   // TODO: Why do we have to await and async here as well?
-  // TODO: Can we combine these two useEffects (and the associated methods?)
-  useEffect(function populateCompaniesOnMount() {
-    async function populateCompanies() {
+
+  useEffect(function populateCompanies() {
+    async function handlePopulate() {
       try {
-        const companiesResult = await JoblyApi.getAllCompanies();
+        const companiesResult = await JoblyApi.getCompanies(formData.searchTerm);
         setCompanies(companiesResult);
         setIsLoading(false);
       } catch (err) {
         throw new Error("No companies found.")
       }
     }
-    populateCompanies();
-  }, []);
+    if (isLoading) handlePopulate();
+  }, [formData.searchTerm, isLoading]);
 
-  useEffect(function populateFilteredCompanies() {
-    async function filterCompanies() {
-      try {
-        const companiesResult = await JoblyApi.filterCompanies(formData.searchTerm);
-        setCompanies(companiesResult);
-        setIsLoading(false);
-        setIsSearching(false);
-      } catch (err) {
-        throw new Error("No companies found.")
-      }
-    }
-    if(isSearching) filterCompanies();
-  }, [formData.searchTerm, isSearching]);
 
-  function handleFilterCompanies(formData){
+  function handleFilter(formData) {
     setFormData(formData);
-    setIsSearching(true);
     setIsLoading(true);
   }
-  
 
   const companiesDisplay = isLoading ?
     <h1>Loading companies...</h1> :
@@ -70,7 +53,7 @@ function CompanyList(props) {
 
   return (
     <div className='CompanyList'>
-      <SearchForm handleFilterCompanies={handleFilterCompanies}/>
+      <SearchForm handleFilter={handleFilter} />
       {companiesDisplay}
     </div>
   )

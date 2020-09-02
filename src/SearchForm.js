@@ -13,8 +13,9 @@ import React, { useState } from "react";
 // CR: make this form as isolated as possible - i.e. pass in
 // something applicable to any form
 
-function SearchForm({handleFilterCompanies}) {
-  const [formData, setFormData] = useState({});
+function SearchForm({ handleFilter }) {
+  const initialState = { searchTerm: "" };
+  const [formData, setFormData] = useState(initialState);
 
   const { searchTerm } = formData;
 
@@ -30,14 +31,14 @@ function SearchForm({handleFilterCompanies}) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    handleFilterCompanies(formData)
+    handleFilter(formData);
   }
 
   return (
     <form onSubmit={handleSubmit} className='SearchForm'>
-      <input 
-        name="searchTerm" 
-        value = {searchTerm} 
+      <input
+        name="searchTerm"
+        value={searchTerm}
         placeholder="Enter search term.."
         onChange={handleChange} />
       <button>Search</button>
