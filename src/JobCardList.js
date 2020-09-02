@@ -12,12 +12,20 @@ import JobCard from "./JobCard";
  * Props
  * 
  */
-function JobCardList(props) {
+function JobCardList({ jobs }) {
+
+  const jobsDisplay = jobs.map(job =>
+    <JobCard
+      id={job.id}
+      title={job.title}
+      salary={job.salary}
+      equity={job.equity}
+      key={job.id}
+    />)
 
   return (
     <div>
-      <JobCard />
-      <h1>This is a list of JobCard components</h1>
+      {jobsDisplay}
     </div>
   )
 

@@ -10,11 +10,13 @@ import React from "react";
  * Props
  * 
  */
-function JobCard(props) {
+function JobCard({ id, title, salary, equity }) {
 
   return (
     <div className='JobCard'>
-      <h1>This will display the data of a Job</h1>
+      <h3>{title}</h3>
+      <p>Salary: {salary}</p>
+      <p>Equity: {equity}</p>
     </div>
   )
 }

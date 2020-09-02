@@ -10,11 +10,13 @@ import React from "react";
  * Props
  * 
  */
-function CompanyCard(props) {
+function CompanyCard({ handle, name, description, logoUrl }) {
 
   return (
     <div className='CompanyCard'>
-      <h1>This is where the company card info will go using props.</h1>
+      <h3>{name}</h3>
+      <p>{description}</p>
+      <img src={logoUrl} alt={name} />
     </div>
   )
 }
