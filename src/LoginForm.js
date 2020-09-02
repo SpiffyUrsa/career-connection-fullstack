@@ -13,8 +13,8 @@ import Alert from './Alert'
  * 
  */
 function LoginForm({login}) {
-  // debugger
-  const [formData, setFormData] = useState({});
+  
+  const [formData, setFormData] = useState({username: "", password:""});
   const history = useHistory()
 
   const { username, password } = formData;
@@ -31,7 +31,6 @@ function LoginForm({login}) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    // debugger
     login(username, password)
     history.push('/')
   }

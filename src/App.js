@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Routes from './Routes';
 import Navigation from './Navigation';
-import { BrowserRouter, Redirect } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import JoblyApi from './api.js'
 
 /**
@@ -18,26 +18,41 @@ import JoblyApi from './api.js'
 function App() {
 
   const [token, setToken] = useState('')
-  //TODO: Perhaps we include the token as state and useffect to track changes?
+  const [currentUser, setCurrentUser] = useState({});
+  //TODO: Perhaps we include the token as state and useEffect to track changes?
 
-  function login(username, password){
-    async function handleLogin(){
+  function login(username, password) {
+    async function handleLogin() {
       try {
         const loginResult = await JoblyApi.requestLogin(username, password);
         setToken(loginResult);
-      } catch(err){
+        setCurrentUser({ username });
+      } catch (err) {
         throw new Error('Login Failed')
       }
     }
     handleLogin()
   }
-  console.log('token:', token)
-  
+
+  function register(username, password, firstName, lastName, email) {
+    async function handleRegister() {
+      try {
+        const registerResult = await JoblyApi.requestRegister(username, password, firstName, lastName, email);
+        setToken(registerResult);
+        setCurrentUser({ username });
+      } catch (err) {
+        throw new Error("Register Failed.");
+      }
+    }
+    handleRegister();
+  }
+
+  // TODO: If are going to be using context, should we just apply context to all of our components?
   return (
     <div className="App">
       <BrowserRouter>
-        <Navigation />
-        <Routes login={login} />
+        <Navigation currentUser={currentUser} />
+        <Routes login={login} register={register} />
       </BrowserRouter>
     </div>
   );

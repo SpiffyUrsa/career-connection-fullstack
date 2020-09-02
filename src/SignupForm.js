@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Alert from './Alert'
+import {useHistory} from "react-router-dom";
 
 /**
  * Renders signup form
@@ -11,9 +12,15 @@ import Alert from './Alert'
  * Props
  * 
  */
-function SignupForm() {
-  const [formData, setFormData] = useState({});
-
+function SignupForm({register}) {
+  const [formData, setFormData] = useState({
+      username:"", 
+      password:"", 
+      firstName:"", 
+      lastName:"", 
+      email:""
+    });
+  const history = useHistory();
   const { username, password, firstName, lastName, email } = formData;
 
   function handleChange(evt) {
@@ -27,8 +34,9 @@ function SignupForm() {
   }
 
   function handleSubmit(evt) {
-    // Do something with the parent component function.
-    //include some condition to render the alert
+    evt.preventDefault();
+    register(username, password, firstName, lastName, email);
+    history.push("/");
   }
 
   return (

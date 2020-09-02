@@ -29,7 +29,7 @@ import JoblyApi from "./api";
  */
 
 // TODO: how do we handle error pages/redirects/home,  etc
-function Routes({login}) {
+function Routes({login, register}) {
   
   return (
     <div className='Routes'>
@@ -50,7 +50,7 @@ function Routes({login}) {
             <LoginForm login={login}/>
           </Route>
           <Route exact path="/signup">
-            <SignupForm />
+            <SignupForm register={register} />
           </Route>
           <Route exact path="/profile">
             <ProfileForm />

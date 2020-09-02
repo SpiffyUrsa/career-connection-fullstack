@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, NavLink} from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 /**
  * Renders nav bar
@@ -11,16 +11,27 @@ import {Link, NavLink} from 'react-router-dom'
  * Props
  * 
  */
-function Navigation(){
-  return(
-    <nav>
-      <NavLink exact to='/'>Jobly</NavLink>
+function Navigation({ currentUser }) {
+
+  const { username } = currentUser;
+
+  const navDisplay = username ?
+    <div>
       <NavLink exact to='/companies'>Companies</NavLink>
       <NavLink exact to='/jobs'>Jobs</NavLink>
       <NavLink exact to='/profile'>Profile</NavLink>
-      <NavLink exact to='/'>Log Out</NavLink>
+      <NavLink exact to='/'>Log Out {username}</NavLink>
+    </div> :
+    <div>
       <NavLink exact to='/login'>Login</NavLink>
       <NavLink exact to='/signup'>Sign Up</NavLink>
+    </div>
+
+
+  return (
+    <nav className="Navigation">
+      <NavLink exact to='/'>Jobly</NavLink>
+      {navDisplay}
     </nav>
   )
 }
