@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom'
 
 /**
  * Renders individual details about a company
@@ -13,11 +14,13 @@ import React from "react";
 function CompanyCard({ handle, name, description, logoUrl }) {
 
   return (
-    <div className='CompanyCard'>
-      <h3>{name}</h3>
-      <p>{description}</p>
-      <img src={logoUrl} alt={name} />
-    </div>
+    <Link exact to={`/companies/${handle}`}>
+      <div className='CompanyCard'>
+        <h3>{name}</h3>
+        <p>{description}</p>
+        <img src={logoUrl} alt={name} />
+      </div>
+    </Link>
   )
 }
 

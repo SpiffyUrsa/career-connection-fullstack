@@ -13,7 +13,7 @@ import React, { useState } from "react";
 // CR: make this form as isolated as possible - i.e. pass in
 // something applicable to any form
 
-function SearchForm() {
+function SearchForm({handleFilterCompanies}) {
   const [formData, setFormData] = useState({});
 
   const { searchTerm } = formData;
@@ -29,7 +29,8 @@ function SearchForm() {
   }
 
   function handleSubmit(evt) {
-    // Do something with the parent component function.
+    evt.preventDefault();
+    handleFilterCompanies(formData)
   }
 
   return (
