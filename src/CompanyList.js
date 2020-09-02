@@ -14,30 +14,27 @@ import JoblyApi from "./api.js";
  * Props
  * 
  */
-function CompanyList(props) {
+function CompanyList() {
   const [companies, setCompanies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [formData, setFormData] = useState({});
-
-  // TODO: Why do we have to await and async here as well?
+  // const [formData, setFormData] = useState({});
 
   useEffect(function populateCompanies() {
+    search()
+  }, []);
+
+  function search(searchTerm) {
+    setIsLoading(true);
     async function handlePopulate() {
       try {
-        const companiesResult = await JoblyApi.getCompanies(formData.searchTerm);
+        const companiesResult = await JoblyApi.getCompanies(searchTerm);
         setCompanies(companiesResult);
         setIsLoading(false);
       } catch (err) {
         throw new Error("No companies found.")
       }
     }
-    if (isLoading) handlePopulate();
-  }, [formData.searchTerm, isLoading]);
-
-
-  function handleFilter(formData) {
-    setFormData(formData);
-    setIsLoading(true);
+    handlePopulate();
   }
 
   const companiesDisplay = isLoading ?
@@ -53,7 +50,7 @@ function CompanyList(props) {
 
   return (
     <div className='CompanyList'>
-      <SearchForm handleFilter={handleFilter} />
+      <SearchForm search={search} />
       {companiesDisplay}
     </div>
   )

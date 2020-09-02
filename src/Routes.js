@@ -7,6 +7,7 @@ import JobList from './JobList'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
 import ProfileForm from './ProfileForm'
+import JoblyApi from "./api";
 
 /**
  * Routes all routes
@@ -28,8 +29,8 @@ import ProfileForm from './ProfileForm'
  */
 
 // TODO: how do we handle error pages/redirects/home,  etc
-function Routes() {
-
+function Routes({login}) {
+  
   return (
     <div className='Routes'>
         <Switch>
@@ -46,7 +47,7 @@ function Routes() {
             <JobList />
           </Route>
           <Route exact path="/login">
-            <LoginForm />
+            <LoginForm login={login}/>
           </Route>
           <Route exact path="/signup">
             <SignupForm />

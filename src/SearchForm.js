@@ -8,12 +8,11 @@ import React, { useState } from "react";
  * State
  * 
  * Props
+ * - {search} is called when form submitted and updates companies/jobs
  * 
  */
-// CR: make this form as isolated as possible - i.e. pass in
-// something applicable to any form
 
-function SearchForm({ handleFilter }) {
+function SearchForm({ search }) {
   const initialState = { searchTerm: "" };
   const [formData, setFormData] = useState(initialState);
 
@@ -31,7 +30,7 @@ function SearchForm({ handleFilter }) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    handleFilter(formData);
+    search(searchTerm);
   }
 
   return (

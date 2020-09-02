@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
  * Routes --> CompanyList --> CompanyCard
  * 
  * State
- * 
+ *  
  * Props
  * 
  */
@@ -17,7 +17,7 @@ function CompanyCard({ handle, name, description, logoUrl }) {
   const logoDisplay = logoUrl ? <img src={logoUrl} alt={name} /> : null;
 
   return (
-    <Link exact to={`/companies/${handle}`}>
+    <Link to={`/companies/${handle}`}>
       <div className='CompanyCard'>
         <h3>{name}</h3>
         <p>{description}</p>

@@ -14,35 +14,33 @@ import JoblyApi from './api.js'
  * Props
  * 
  */
-function JobList(props) {
+function JobList() {
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [formData, setFormData] = useState({});
 
   useEffect(function populateJobs() {
+    search();
+  }, []);
+  
+  function search(searchTerm) {
+    setIsLoading(true)
     async function handlePopulate() {
       try {
-        console.log("This is the searchTerm", formData.searchTerm);
-        const jobsResult = await JoblyApi.getJobs(formData.searchTerm);
+        const jobsResult = await JoblyApi.getJobs(searchTerm);
         setJobs(jobsResult);
         setIsLoading(false);
       } catch (err) {
         throw new Error("No jobs found.")
       }
     }
-    if (isLoading) handlePopulate();
-  }, [formData.searchTerm, isLoading]);
-
-  function handleFilter(formData) {
-    setFormData(formData);
-    setIsLoading(true);
+    handlePopulate();
   }
 
   const jobListDisplay = isLoading ? <h1>Loading jobs...</h1> : <JobCardList jobs={jobs} />
 
   return (
     <div className='JobList'>
-      <SearchForm handleFilter={handleFilter} />
+      <SearchForm search={search} />
       {jobListDisplay}
     </div>
   )

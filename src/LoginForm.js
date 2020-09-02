@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useHistory} from 'react-router-dom'
 import Alert from './Alert'
 
 /**
@@ -11,8 +12,10 @@ import Alert from './Alert'
  * Props
  * 
  */
-function LoginForm() {
+function LoginForm({login}) {
+  // debugger
   const [formData, setFormData] = useState({});
+  const history = useHistory()
 
   const { username, password } = formData;
 
@@ -27,8 +30,10 @@ function LoginForm() {
   }
 
   function handleSubmit(evt) {
-    // Do something with the parent component function.
-    //include some condition to render the alert
+    evt.preventDefault();
+    // debugger
+    login(username, password)
+    history.push('/')
   }
 
   return (

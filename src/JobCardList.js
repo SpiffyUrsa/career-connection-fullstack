@@ -14,14 +14,15 @@ import JobCard from "./JobCard";
  */
 function JobCardList({ jobs }) {
 
-  const jobsDisplay = jobs.map(job =>
-    <JobCard
-      id={job.id}
-      title={job.title}
-      salary={job.salary}
-      equity={job.equity}
-      key={job.id}
-    />)
+  const jobsDisplay = jobs.length ===0 ?
+    <h2> No current job openings </h2> : jobs.map(job =>
+      <JobCard
+        id={job.id}
+        title={job.title}
+        salary={job.salary}
+        equity={job.equity}
+        key={job.id}
+      />)
 
   return (
     <div>

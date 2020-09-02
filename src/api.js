@@ -42,30 +42,36 @@ class JoblyApi {
   }
 
   /** Get companies. Companies can be filtered by a search term. */
-  static async getCompanies(searchTerm) {
-    let queryString = "";
 
-    if (searchTerm !== undefined && searchTerm !== "") {
-      queryString += `?name=${searchTerm}`;
-    }
-    let res = await this.request(`companies${queryString}`);
+  static async getCompanies(searchTerm) {
+
+    let params = searchTerm === '' ? {} : {'name': searchTerm}
+   
+    let res = await this.request(`companies`, params );
     return res.companies;
   }
 
   /** Get jobs. Jobs can be filtered by title. */
   static async getJobs(searchTerm) {
-    let queryString = "";
-    if (searchTerm !== undefined && searchTerm !== "") {
-      queryString += `?title=${searchTerm}`;
-    }
-    let res = await this.request(`jobs${queryString}`);
+
+    let params = searchTerm === '' ? {} : {'title': searchTerm}
+   
+    let res = await this.request(`jobs`, params );
     return res.jobs;
+  }
+
+  /**Handle Login */
+  static async requestLogin(username, password){
+    
+    let res = await this.request('auth/token', {username, password}, 'post')
+    this.token = res.token
+    return res.token
   }
 }
 
 // for now, put token ("testuser" / "password" on class)
-JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
-  "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
-  "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
+// JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
+//   "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
+//   "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
 
 export default JoblyApi;
