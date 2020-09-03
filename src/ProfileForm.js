@@ -44,7 +44,7 @@ function ProfileForm() {
           type= 'text'
           value = {username} 
           onChange={handleChange}
-          readonly />
+          readOnly />
 
         
         <label htmlFor = 'firstName'>First Name:</label>

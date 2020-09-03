@@ -29,19 +29,19 @@ import JoblyApi from "./api";
  */
 
 // TODO: how do we handle error pages/redirects/home,  etc
-function Routes({login, register}) {
+function Routes({login, register, currentUser}) {
   
   return (
     <div className='Routes'>
         <Switch>
           <Route exact path="/">
-            <Homepage />
+            <Homepage currentUser = {currentUser} />
           </Route>
           <Route exact path="/companies">
             <CompanyList />
           </Route>
           <Route exact path="/companies/:handle">
-            <CompanyDetail />
+            <CompanyDetail/>
           </Route>
           <Route exact path="/jobs">
             <JobList />

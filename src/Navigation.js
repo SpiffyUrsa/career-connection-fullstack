@@ -9,9 +9,9 @@ import { Link, NavLink } from 'react-router-dom'
  * State
  * 
  * Props
- * 
+ * - CurrentUser is obj with logged in username 
  */
-function Navigation({ currentUser }) {
+function Navigation({ currentUser, logout }) {
 
   const { username } = currentUser;
 
@@ -20,7 +20,7 @@ function Navigation({ currentUser }) {
       <NavLink exact to='/companies'>Companies</NavLink>
       <NavLink exact to='/jobs'>Jobs</NavLink>
       <NavLink exact to='/profile'>Profile</NavLink>
-      <NavLink exact to='/'>Log Out {username}</NavLink>
+      <NavLink exact to='/' onClick={logout}>Log Out {username}</NavLink>
     </div> :
     <div>
       <NavLink exact to='/login'>Login</NavLink>
