@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Homepage from "./Homepage";
 import CompanyList from "./CompanyList";
@@ -8,6 +8,8 @@ import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
 import ProfileForm from './ProfileForm'
 import JoblyApi from "./api";
+import UserContext from "./UserContext";
+import ErrorPage from './ErrorPage';
 
 /**
  * Routes all routes
@@ -25,35 +27,40 @@ import JoblyApi from "./api";
  * State
  * 
  * Props
- * 
+ *  - login (function)
+ *  - register (function)
  */
 
-// TODO: how do we handle error pages/redirects/home,  etc
-function Routes({login, register, currentUser}) {
-  // TODO: Change the props to use context
+function Routes({login, register }) {
+
+  const user = useContext(UserContext);
+
   return (
     <div className='Routes'>
         <Switch>
           <Route exact path="/">
-            <Homepage currentUser = {currentUser} />
+            <Homepage />
           </Route>
           <Route exact path="/companies">
-            <CompanyList />
+            {user ? <CompanyList /> : <Redirect to='/login'/>}
           </Route>
           <Route exact path="/companies/:handle">
-            <CompanyDetail/>
+            {user ? <CompanyDetail/> : <Redirect to='/login'/>}
           </Route>
           <Route exact path="/jobs">
-            <JobList />
+            {user ? <JobList /> : <Redirect to='/login'/>}
           </Route>
           <Route exact path="/login">
-            <LoginForm login={login}/>
+            {user ? <Redirect to='/'/> : <LoginForm login={login}/>}
           </Route>
           <Route exact path="/signup">
-            <SignupForm register={register} />
+            {user ? <Redirect to='/'/>  : <SignupForm register={register} />}
           </Route>
           <Route exact path="/profile">
-            <ProfileForm />
+            {user ? <ProfileForm /> : <Redirect to='/login'/>}
+          </Route>
+          <Route>
+            <ErrorPage />
           </Route>
           <Redirect to="/" />
         </Switch>

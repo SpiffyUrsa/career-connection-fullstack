@@ -35,7 +35,7 @@ function SignupForm({register}) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    register(username, password, firstName, lastName, email);
+    register(formData);
     history.push("/");
   }
 

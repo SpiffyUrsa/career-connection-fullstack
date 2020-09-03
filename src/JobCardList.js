@@ -10,7 +10,7 @@ import JobCard from "./JobCard";
  * State
  * 
  * Props
- * 
+ *  - jobs
  */
 function JobCardList({ jobs }) {
 

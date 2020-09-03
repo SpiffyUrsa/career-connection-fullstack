@@ -12,74 +12,84 @@ import UserContext from "./UserContext";
  * App --> {Navigation, Routes}
  * 
  * State
- *  Token: A string that holds the token for authentication.
- * currentUser: An object that holds data on the current user.
+ *  - Token: A string that holds the token for authentication.
+ *  - currentUser: An object that holds data on the current user.
+ *  - isLoading: displays loading message while requests are made
  * 
  * Props
  * 
  */
-//TODO: handle loading page between requests
 function App() {
  
   const [currentUser, setCurrentUser] = useState(null);
+  const [token, setToken] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
 
-// TODO: When the token is modified in local storage, find the payload associated with that token
-// and get back data on that user from the API.
+  /**Each time the token is updated,
+   * set token to local storage if not already there
+   * Get information about the user
+   */
+  useEffect(function handleTokenAndUser() {
+    console.debug('Entered HandleTokenAndUser with token:', token)
+    if (token) localStorage.setItem('token', token)
+    const lsToken = localStorage.getItem('token')
 
-  // useEffect(function () {
-  //   if (currentUser) {
-  //     getCurrentUser();
-  //   }
-  // }, [currentUser])
+    JoblyApi.token = lsToken
 
-  // Dependencies need to be related to react State.
-
-  // TODO: Put this in a useEffect so it runs when the token changes. 
-  // Have the localStorage set in here.
-  async function getCurrentUser() {
-    try {
-      let username = JoblyApi.getTokenPayload(JoblyApi.token);
-      const userResult = await JoblyApi.getUser(username);
-      setCurrentUser(userResult)
-    } catch (err) {
-      throw new Error('User not found')
+    async function getCurrentUser() {
+      console.debug('Entered getCurrentUser with token:', token)
+      try {
+        let username = JoblyApi.getTokenPayload(lsToken);
+        const userResult = await JoblyApi.getUser(username);
+        setCurrentUser(userResult)
+        setIsLoading(false);
+      } catch (err) {
+        throw new Error('User not found')
+      }
     }
-  }
+    if(lsToken) getCurrentUser()
+  }, [token])
 
+  /**Handle Login Request*/
   async function login(username, password) {
     try {
-      await JoblyApi.requestLogin(username, password);
-      getCurrentUser();
+      setIsLoading(true);
+      const token = await JoblyApi.login(username, password);
+      setToken(token)
     } catch (err) {
       throw new Error('Login Failed')
     }
   }
 
-  // Just pass in an object with the data.
-  async function register(username, password, firstName, lastName, email) {
+  /**Handle Register Request */
+  async function register(userData) {
     try {
-      // Change the joblyApi names to register. No request.
-      await JoblyApi.requestRegister(username, password, firstName, lastName, email);
-      getCurrentUser();
+      setIsLoading(true);
+      const token = await JoblyApi.register(userData);
+      setToken(token)
     } catch (err) {
       throw new Error("Register Failed.");
     }
   }
 
+  /**Handle Logout */
   function logout() {
-    // setToken to null and localstorage removal.
-    JoblyApi.clearToken();
+    localStorage.removeItem('token')
     setCurrentUser(null);
   }
-  // TODO: Change the Context to contain everything.
-  // TODO: If are going to be using context, should we just apply context to all of our components?
+
+  const appDisplay = isLoading ? <h1>Is Loading...</h1> :
+    <>
+      <UserContext.Provider value={currentUser}>
+        <Navigation logout={logout} />
+        <Routes login={login} register={register}/>
+      </UserContext.Provider>
+    </>
+
   return (
     <div className="App">
       <BrowserRouter>
-        <Navigation currentUser={currentUser} logout={logout} />
-        <UserContext.Provider value={currentUser}>
-          <Routes login={login} register={register} currentUser={currentUser} />
-        </UserContext.Provider>
+        {appDisplay}
       </BrowserRouter>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useParams, Redirect } from "react-router-dom"
 import JobCardList from "./JobCardList";
 import JoblyApi from "./api.js";
 
@@ -16,6 +16,7 @@ import JoblyApi from "./api.js";
  */
 function CompanyDetail() {
   const { handle } = useParams();
+  console.log('handle', handle)
 
   const [company, setCompany] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -29,7 +30,7 @@ function CompanyDetail() {
         setCompany(companyResult);
         setIsLoading(false);
       } catch (err) {
-        throw new Error("Company not found.")
+        return <Redirect to='/'/>
       }
     }
     getCompanyData();

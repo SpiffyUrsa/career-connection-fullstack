@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { NavLink } from 'react-router-dom'
+import UserContext from "./UserContext";
 
 /**
  * Renders nav bar
@@ -9,17 +10,18 @@ import { NavLink } from 'react-router-dom'
  * State
  * 
  * Props
- * - CurrentUser is obj with logged in username 
  * - logout is a function that clears the token and currentUser.
  */
-function Navigation({ currentUser, logout }) {
+function Navigation({ logout }) {
 
-  const navDisplay = currentUser ?
+  const user = useContext(UserContext);
+
+  const navDisplay = (user) ?
     <>
       <NavLink exact to='/companies'>Companies</NavLink>
       <NavLink exact to='/jobs'>Jobs</NavLink>
       <NavLink exact to='/profile'>Profile</NavLink>
-      <NavLink exact to='/' onClick={logout}>Log Out {currentUser.username}</NavLink>
+      <NavLink exact to='/' onClick={logout}>Log Out {user.username}</NavLink>
     </> :
     <>
       <NavLink exact to='/login'>Login</NavLink>

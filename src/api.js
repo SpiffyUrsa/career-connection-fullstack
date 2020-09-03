@@ -62,20 +62,16 @@ class JoblyApi {
   }
 
   /**Handle Login */
-  static async requestLogin(username, password) {
+  static async login(username, password) {
 
     let res = await this.request('auth/token', { username, password }, 'post')
-    // Token should be on localStorage. What happens when we refresh the page? If we assign it here,
-    // it would disappear.
-    this.token = res.token
     return res.token
   }
 
   /** Handle register */
-  static async requestRegister(username, password, firstName, lastName, email) {
+  static async register(userData) {
 
-    let res = await this.request('auth/register', { username, password, firstName, lastName, email }, 'post');
-    this.token = res.token
+    let res = await this.request('auth/register', userData, 'post');
     return res.token
   }
 
@@ -90,12 +86,6 @@ class JoblyApi {
   static getTokenPayload(token) {
     let payload = jwt.decode(token);
     return payload.username;
-  }
-
-  /** Clear the token currently stored in the JoblyApi. */
-  // TODO: we don't this
-  static clearToken() {
-    this.token = null;
   }
 
 }

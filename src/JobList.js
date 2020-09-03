@@ -30,7 +30,7 @@ function JobList() {
         setJobs(jobsResult);
         setIsLoading(false);
       } catch (err) {
-        throw new Error("No jobs found.")
+        throw new Error('Error Finding Job')
       }
     }
     handlePopulate();
