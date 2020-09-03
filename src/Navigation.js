@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 /**
  * Renders nav bar
@@ -10,22 +10,21 @@ import { Link, NavLink } from 'react-router-dom'
  * 
  * Props
  * - CurrentUser is obj with logged in username 
+ * - logout is a function that clears the token and currentUser.
  */
 function Navigation({ currentUser, logout }) {
 
-  const { username } = currentUser;
-
-  const navDisplay = username ?
-    <div>
+  const navDisplay = currentUser ?
+    <>
       <NavLink exact to='/companies'>Companies</NavLink>
       <NavLink exact to='/jobs'>Jobs</NavLink>
       <NavLink exact to='/profile'>Profile</NavLink>
-      <NavLink exact to='/' onClick={logout}>Log Out {username}</NavLink>
-    </div> :
-    <div>
+      <NavLink exact to='/' onClick={logout}>Log Out {currentUser.username}</NavLink>
+    </> :
+    <>
       <NavLink exact to='/login'>Login</NavLink>
       <NavLink exact to='/signup'>Sign Up</NavLink>
-    </div>
+    </>
 
 
   return (

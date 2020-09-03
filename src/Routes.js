@@ -30,7 +30,7 @@ import JoblyApi from "./api";
 
 // TODO: how do we handle error pages/redirects/home,  etc
 function Routes({login, register, currentUser}) {
-  
+  // TODO: Change the props to use context
   return (
     <div className='Routes'>
         <Switch>

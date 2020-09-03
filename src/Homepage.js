@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Link } from 'react-router-dom'
+import UserContext from "./UserContext";
 
 /**
  * Renders a different homepage based on logged in/out
@@ -9,17 +10,15 @@ import { Link } from 'react-router-dom'
  * State
  * 
  * Props
- * - CurrentUser is obj with logged in username
+ * 
  */
 
-function Homepage({currentUser}) {
+function Homepage() {
 
-  console.log('current user:', currentUser)
+  const user = useContext(UserContext);
 
-  const { firstName } = currentUser
-
-  const welcomeMessage = firstName ?
-    <h1>Great to have you back, {firstName}!</h1> :
+  const welcomeMessage = user ?
+    <h1>Great to have you back, {user.firstName}!</h1> :
     <div>
       <h2>Please log in or register to view jobs!</h2>
       <Link to='/login'>Log in</Link>

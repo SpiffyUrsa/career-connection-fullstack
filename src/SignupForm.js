@@ -10,7 +10,7 @@ import {useHistory} from "react-router-dom";
  * State
  * 
  * Props
- * 
+ * -register: A function that handles the registering of the user.
  */
 function SignupForm({register}) {
   const [formData, setFormData] = useState({
@@ -52,7 +52,8 @@ function SignupForm({register}) {
 
         <label htmlFor = 'password'>Password:</label>
         <input 
-          name="password" 
+          name="password"
+          type="password" 
           value = {password} 
           onChange={handleChange} />
         

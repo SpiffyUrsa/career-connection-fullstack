@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwt from "jsonwebtoken";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
@@ -45,25 +46,27 @@ class JoblyApi {
 
   static async getCompanies(searchTerm) {
 
-    let params = searchTerm === '' ? {} : {'name': searchTerm}
-   
-    let res = await this.request(`companies`, params );
+    let params = searchTerm === '' ? {} : { 'name': searchTerm }
+
+    let res = await this.request(`companies`, params);
     return res.companies;
   }
 
   /** Get jobs. Jobs can be filtered by title. */
   static async getJobs(searchTerm) {
 
-    let params = searchTerm === '' ? {} : {'title': searchTerm}
-   
-    let res = await this.request(`jobs`, params );
+    let params = searchTerm === '' ? {} : { 'title': searchTerm }
+
+    let res = await this.request(`jobs`, params);
     return res.jobs;
   }
 
   /**Handle Login */
-  static async requestLogin(username, password){
-    
-    let res = await this.request('auth/token', {username, password}, 'post')
+  static async requestLogin(username, password) {
+
+    let res = await this.request('auth/token', { username, password }, 'post')
+    // Token should be on localStorage. What happens when we refresh the page? If we assign it here,
+    // it would disappear.
     this.token = res.token
     return res.token
   }
@@ -71,18 +74,33 @@ class JoblyApi {
   /** Handle register */
   static async requestRegister(username, password, firstName, lastName, email) {
 
-    let res = await this.request('auth/register', {username, password, firstName, lastName, email}, 'post');
+    let res = await this.request('auth/register', { username, password, firstName, lastName, email }, 'post');
     this.token = res.token
     return res.token
   }
 
   /** Get user */
-  static async getUser(username){
+  static async getUser(username) {
 
     let res = await this.request(`users/${username}`);
     return res.user;
   }
+
+  /** Getting the payload from the token */
+  static getTokenPayload(token) {
+    let payload = jwt.decode(token);
+    return payload.username;
+  }
+
+  /** Clear the token currently stored in the JoblyApi. */
+  // TODO: we don't this
+  static clearToken() {
+    this.token = null;
+  }
+
 }
+
+
 
 // for now, put token ("testuser" / "password" on class)
 // JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
