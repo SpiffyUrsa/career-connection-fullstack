@@ -11,47 +11,28 @@ import JoblyApi from './api.js'
  * App --> {Navigation, Routes}
  * 
  * State
+ *  Token: A string that holds the token for authentication.
+ * currentUser: An object that holds data on the current user.
  * 
  * Props
  * 
  */
 //TODO: handle loading page between requests
 function App() {
-
-  const [token, setToken] = useState('')
-  const [currentUser, setCurrentUser] = useState({});
-  //TODO: Perhaps we include the token as state and useEffect to track changes?
-
-  //TODO: Do we need to do anything more with token to ensure changes are re-rendered? 
-
-  // useEffect(function handleTokenChange(token, currentUser) {
-  //   // console.log('Entered our useeffect')
-  //   // async function getCurrentUser(){
-  //   //   console.log('getCurrentUser is running')
-  //   //   try{
-  //   //     const userResult = await JoblyApi.getUser(token, currentUser);
-  //   //     setCurrentUser(userResult)
-  //   //   } catch(err){
-  //   //     throw new Error('User not found')
-  //   //   }
-  //   // }
-  //   // if(Object.values(currentUser).length > 0) getCurrentUser()
-  //   // console.log('TOKEN IS', token)
-  //   // console.log('Current User is:', currentUser)
-  //   if (token !== '' && token !== undefined) getCurrentUser()
-  // }, [token])
-
-  // console.log('CurrentUser', currentUser)
-  // console.log('token', token)
+  // TODO: Move the token to the API. 
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(function(){
-    if (token !== '' && token !== undefined) getCurrentUserRequest(token, currentUser.username)
-  }, [token, currentUser.username])
+    if (currentUser) {
+      getCurrentUserRequest(currentUser.username)
+    } 
+  }, [currentUser])
 
-  function getCurrentUserRequest(token, username) {
+  //TODO: Change the name of this function to fit what it actually does.
+  function getCurrentUserRequest(username) {
     async function getCurrentUser() {
       try {
-        const userResult = await JoblyApi.getUser(token, username);
+        const userResult = await JoblyApi.getUser(username);
         setCurrentUser(userResult)
       } catch (err) {
         throw new Error('User not found')
@@ -59,12 +40,12 @@ function App() {
     } getCurrentUser()
   }
 
+  // TODO: Don't need to wrap this in a non async function.
   function login(username, password) {
     async function handleLogin() {
       try {
-        const loginResult = await JoblyApi.requestLogin(username, password);
-        setToken(loginResult);
-        getCurrentUserRequest(loginResult, username)
+        await JoblyApi.requestLogin(username, password);
+        getCurrentUserRequest(username)
       } catch (err) {
         throw new Error('Login Failed')
       }
@@ -75,9 +56,8 @@ function App() {
   function register(username, password, firstName, lastName, email) {
     async function handleRegister() {
       try {
-        const registerResult = await JoblyApi.requestRegister(username, password, firstName, lastName, email);
-        setToken(registerResult);
-        setCurrentUser({ username });
+        await JoblyApi.requestRegister(username, password, firstName, lastName, email);
+        getCurrentUserRequest(username);
       } catch (err) {
         throw new Error("Register Failed.");
       }
@@ -87,7 +67,7 @@ function App() {
 
   function logout() {
     setToken('')
-    setCurrentUser({})
+    setCurrentUser(null)
   }
 
   // TODO: If are going to be using context, should we just apply context to all of our components?

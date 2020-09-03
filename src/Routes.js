@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Homepage from "./Homepage";
 import CompanyList from "./CompanyList";
 import CompanyDetail from "./CompanyDetail";
@@ -55,6 +55,7 @@ function Routes({login, register, currentUser}) {
           <Route exact path="/profile">
             <ProfileForm />
           </Route>
+          <Redirect to="/" />
         </Switch>
     </div>
   )
