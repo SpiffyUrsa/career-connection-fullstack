@@ -12,33 +12,36 @@ import UserContext from "./UserContext";
  * App --> {Navigation, Routes}
  * 
  * State
- *  - Token: A string that holds the token for authentication.
+ *  - initialToken: A string that holds the token for authentication.
  *  - currentUser: An object that holds data on the current user.
- *  - isLoading: displays loading message while requests are made
+ *  - isLoading: A boolean based off whether the initialToken state is defined. Determines whether
+ *    or not to show the Loading message or the routes.
  * 
  * Props
  * 
  */
 function App() {
- 
+
   const [currentUser, setCurrentUser] = useState(null);
-  const [token, setToken] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [initialToken, setInitialToken] = useState(localStorage.getItem('token'))
+  const [isLoading, setIsLoading] = useState(initialToken !== null);
 
   /**Each time the token is updated,
    * set token to local storage if not already there
    * Get information about the user
    */
   useEffect(function handleTokenAndUser() {
-    console.debug('Entered HandleTokenAndUser with token:', token)
-    if (token) localStorage.setItem('token', token)
-    const lsToken = localStorage.getItem('token')
 
+    console.debug('Entered HandleTokenAndUser with token:', initialToken)
+    if (initialToken) localStorage.setItem('token', initialToken)
+    const lsToken = localStorage.getItem('token')
     JoblyApi.token = lsToken
 
     async function getCurrentUser() {
-      console.debug('Entered getCurrentUser with token:', token)
+      console.debug('Entered getCurrentUser with lsToken:', lsToken)
+      console.debug('Entered getCurrentUser with token', initialToken);
       try {
+        setIsLoading(true);
         let username = JoblyApi.getTokenPayload(lsToken);
         const userResult = await JoblyApi.getUser(username);
         setCurrentUser(userResult)
@@ -47,15 +50,15 @@ function App() {
         throw new Error('User not found')
       }
     }
-    if(lsToken) getCurrentUser()
-  }, [token])
+    if (lsToken) getCurrentUser();
+  }, [initialToken])
 
   /**Handle Login Request*/
   async function login(username, password) {
     try {
       setIsLoading(true);
       const token = await JoblyApi.login(username, password);
-      setToken(token)
+      setInitialToken(token)
     } catch (err) {
       throw new Error('Login Failed')
     }
@@ -66,9 +69,21 @@ function App() {
     try {
       setIsLoading(true);
       const token = await JoblyApi.register(userData);
-      setToken(token)
+      setInitialToken(token)
     } catch (err) {
       throw new Error("Register Failed.");
+    }
+  }
+
+  /** handle user edit */
+  async function userEdit(userData) {
+    try {
+      setIsLoading(true);
+      const user = await JoblyApi.editUser(userData);
+      setCurrentUser(user);
+      setIsLoading(false);
+    } catch (err) {
+      throw new Error("User edit data is invalid.");
     }
   }
 
@@ -82,7 +97,7 @@ function App() {
     <>
       <UserContext.Provider value={currentUser}>
         <Navigation logout={logout} />
-        <Routes login={login} register={register}/>
+        <Routes login={login} register={register} userEdit={userEdit} />
       </UserContext.Provider>
     </>
 

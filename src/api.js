@@ -88,6 +88,13 @@ class JoblyApi {
     return payload.username;
   }
 
+  /** Update the user's profile. */
+  static async editUser(userData) {
+    const { username, firstName, lastName, email, password } = userData;
+    let res = await this.request(`users/${username}`, {firstName, password, lastName, email}, 'patch');
+    return res.user;
+  }
+
 }
 
 

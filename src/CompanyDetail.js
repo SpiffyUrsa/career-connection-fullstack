@@ -16,10 +16,10 @@ import JoblyApi from "./api.js";
  */
 function CompanyDetail() {
   const { handle } = useParams();
-  console.log('handle', handle)
 
   const [company, setCompany] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const { handle: companyHandle, name, description, numEmployees, logoUrl, jobs } = company;
 
@@ -30,7 +30,8 @@ function CompanyDetail() {
         setCompany(companyResult);
         setIsLoading(false);
       } catch (err) {
-        return <Redirect to='/'/>
+        console.log("We got into the error catch.", err[0])
+        setError(err[0]);
       }
     }
     getCompanyData();
@@ -44,10 +45,11 @@ function CompanyDetail() {
     </div>
   );
 
+  const errorMessage = <h1>{error}</h1>
 
   return (
     <div className='CompanyDetail'>
-      {companyDetailDisplay}
+      {error ? errorMessage : companyDetailDisplay}
     </div>
   )
 }

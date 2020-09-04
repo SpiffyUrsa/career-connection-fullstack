@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Alert from './Alert'
-
+import UserContext from "./UserContext";
 
 /**
  * Renders Profile form
@@ -12,8 +12,11 @@ import Alert from './Alert'
  * Props
  * 
  */
-function ProfileForm() {
-  const [formData, setFormData] = useState({});
+function ProfileForm({ userEdit }) {
+
+  const user = useContext(UserContext);
+  console.log("This is the user data", user);
+  const [formData, setFormData] = useState({...user, password: ""});
 
   const { username, password, firstName, lastName, email } = formData;
 
@@ -28,47 +31,47 @@ function ProfileForm() {
   }
 
   function handleSubmit(evt) {
-    // Do something with the parent component function.
-    //include some condition to render the alert
+    evt.preventDefault();
+    userEdit(formData);
   }
 
   return (
     <div className='ProfileForm'>
       <h1>Change your Profile</h1>
       <form onSubmit={handleSubmit}>
-        
+
         {/* TODO: make sure the username is hardcoded */}
-        <label htmlFor = 'username'>Username:</label>
-        <input 
-          name="username" 
-          type= 'text'
-          value = {username} 
+        <label htmlFor='username'>Username:</label>
+        <input
+          name="username"
+          type='text'
+          value={username}
           onChange={handleChange}
           readOnly />
 
-        
-        <label htmlFor = 'firstName'>First Name:</label>
-        <input 
-          name="firstName" 
-          value = {firstName}
+        <label htmlFor='firstName'>First Name:</label>
+        <input
+          name="firstName"
+          value={firstName}
           onChange={handleChange} />
 
-        <label htmlFor = 'lastName'>Last Name:</label>
-        <input 
-          name="lastName" 
-          value = {lastName} 
+        <label htmlFor='lastName'>Last Name:</label>
+        <input
+          name="lastName"
+          value={lastName}
           onChange={handleChange} />
 
-        <label htmlFor = 'email'>Email:</label>
-        <input 
-          name="email" 
-          value = {email} 
+        <label htmlFor='email'>Email:</label>
+        <input
+          name="email"
+          value={email}
           onChange={handleChange} />
 
-        <label htmlFor = 'password'>Confirm password to make changes:</label>
-        <input 
-          name="password" 
-          value = {password} 
+        <label htmlFor='password'>Confirm password to make changes:</label>
+        <input
+          name="password"
+          type="password"
+          value={password}
           onChange={handleChange} />
 
         <button>Save Changes</button>

@@ -31,10 +31,10 @@ import ErrorPage from './ErrorPage';
  *  - register (function)
  */
 
-function Routes({login, register }) {
+function Routes({login, register, userEdit }) {
 
   const user = useContext(UserContext);
-
+  
   return (
     <div className='Routes'>
         <Switch>
@@ -45,7 +45,7 @@ function Routes({login, register }) {
             {user ? <CompanyList /> : <Redirect to='/login'/>}
           </Route>
           <Route exact path="/companies/:handle">
-            {user ? <CompanyDetail/> : <Redirect to='/login'/>}
+            {user ? <CompanyDetail /> : <Redirect to='/login'/>}
           </Route>
           <Route exact path="/jobs">
             {user ? <JobList /> : <Redirect to='/login'/>}
@@ -57,12 +57,13 @@ function Routes({login, register }) {
             {user ? <Redirect to='/'/>  : <SignupForm register={register} />}
           </Route>
           <Route exact path="/profile">
-            {user ? <ProfileForm /> : <Redirect to='/login'/>}
+            {user ? <ProfileForm userEdit={userEdit} /> : <Redirect to='/login'/>}
           </Route>
           <Route>
-            <ErrorPage />
+            {/* <ErrorPage /> */}
+            Got Here
           </Route>
-          <Redirect to="/" />
+          {/* <Redirect to="/" /> */}
         </Switch>
     </div>
   )
