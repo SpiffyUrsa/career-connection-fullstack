@@ -15,8 +15,8 @@ import UserContext from "./UserContext";
 function ProfileForm({ userEdit }) {
 
   const user = useContext(UserContext);
-  console.log("This is the user data", user);
   const [formData, setFormData] = useState({...user, password: ""});
+  const [errorMessage, setErrorMessage] = useState('')
 
   const { username, password, firstName, lastName, email } = formData;
 
@@ -30,9 +30,14 @@ function ProfileForm({ userEdit }) {
     })
   }
 
-  function handleSubmit(evt) {
+  async function handleSubmit(evt) {
     evt.preventDefault();
-    userEdit(formData);
+    try {
+      await userEdit(formData);
+    }
+    catch (err) {
+      err.forEach(e => setErrorMessage(m => m+=e))
+    }
   }
 
   return (
@@ -40,7 +45,6 @@ function ProfileForm({ userEdit }) {
       <h1>Change your Profile</h1>
       <form onSubmit={handleSubmit}>
 
-        {/* TODO: make sure the username is hardcoded */}
         <label htmlFor='username'>Username:</label>
         <input
           name="username"
@@ -76,6 +80,7 @@ function ProfileForm({ userEdit }) {
 
         <button>Save Changes</button>
       </form>
+      {errorMessage && <div>{errorMessage}</div>}
     </div>
   )
 }

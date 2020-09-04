@@ -20,6 +20,7 @@ function SignupForm({register}) {
       lastName:"", 
       email:""
     });
+  const [errorMessage, setErrorMessage] = useState('')
   const history = useHistory();
   const { username, password, firstName, lastName, email } = formData;
 
@@ -33,10 +34,15 @@ function SignupForm({register}) {
     })
   }
 
-  function handleSubmit(evt) {
+  async function handleSubmit(evt) {
     evt.preventDefault();
-    register(formData);
-    history.push("/");
+    try {
+      await register(formData);
+      history.push("/");
+    }
+    catch (err) {
+      err.forEach(e => setErrorMessage(m => m+=e))
+    }
   }
 
   return (
@@ -74,9 +80,9 @@ function SignupForm({register}) {
           name="email" 
           value = {email} 
           onChange={handleChange} />
-
         <button>Submit</button>
       </form>
+      {errorMessage && <div>{errorMessage}</div>}
     </div>
   )
 }

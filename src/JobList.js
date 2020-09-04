@@ -36,6 +36,7 @@ function JobList() {
     handlePopulate();
   }
 
+
   const jobListDisplay = isLoading ? <h1>Loading jobs...</h1> : <JobCardList jobs={jobs} />
 
   return (

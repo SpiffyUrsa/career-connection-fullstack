@@ -22,7 +22,6 @@ import UserContext from "./UserContext";
  */
 // CR: add a variable of the current token - pass that as the variable.
 //use one variable for initial token to use across the board
-//change the throw error to update page
  
 function App() {
 
@@ -35,9 +34,9 @@ function App() {
    * Get information about the user
    */
   useEffect(function handleTokenAndUser() {
-
     console.debug('Entered HandleTokenAndUser with token:', initialToken)
-    // if (initialToken) localStorage.setItem('token', initialToken)
+
+    if (initialToken) localStorage.setItem('token', initialToken)
     const lsToken = localStorage.getItem('token')
     JoblyApi.token = lsToken
     
@@ -66,25 +65,14 @@ function App() {
 
   /**Handle Register Request */
   async function register(userData) {
-    try {
-      setIsLoading(true);
       const token = await JoblyApi.register(userData);
       setInitialToken(token)
-    } catch (err) {
-      throw new Error("Register Failed.");
-    }
   }
 
-  /** handle user edit */
+  /**Handle user edit */
   async function userEdit(userData) {
-    try {
-      setIsLoading(true);
       const user = await JoblyApi.editUser(userData);
       setCurrentUser(user);
-      setIsLoading(false);
-    } catch (err) {
-      throw new Error("User edit data is invalid.");
-    }
   }
 
   /**Handle Logout */

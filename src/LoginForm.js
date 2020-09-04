@@ -15,7 +15,7 @@ import Alert from './Alert'
 function LoginForm({login}) {
   
   const [formData, setFormData] = useState({username: "", password:""});
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const history = useHistory()
 
@@ -32,16 +32,13 @@ function LoginForm({login}) {
     })
   }
 
-  //make our login an await so that the page doesn't change if it's unsuccessfull
-  //need to remove the errors on the app - display the errors from the backend
-  //TODO: DO the same thing for register
   async function handleSubmit(evt) {
     evt.preventDefault();
     try {
       await login(username, password)
       history.push('/')
     } catch(err){
-      setErrorMessage(err[0])
+      err.forEach(e => setErrorMessage(m => m+=e))
     }
   }
 

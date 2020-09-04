@@ -96,7 +96,12 @@ class JoblyApi {
     return res.user;
   }
 
-  /** */
+  //TODO: Need to finish application post
+  /** Apply to Job */
+  static async applyToJob(username, jobId) {
+    // console.log('APPLIED TO JOB')
+    let res = await this.request(`users/${username}/jobs/${jobId}`, {}, "post")
+  }
 
 }
 
