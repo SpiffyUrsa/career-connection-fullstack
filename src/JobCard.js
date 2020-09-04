@@ -1,4 +1,5 @@
-import React from "react";
+import React,{useContext} from "react";
+import UserContext from "./UserContext";
 
 /**
  * Renders details about one job
@@ -11,6 +12,8 @@ import React from "react";
  * 
  */
 function JobCard({ id, title, salary, equity }) {
+
+  const user = useContext(UserContext);
 
   return (
     <div className='JobCard'>

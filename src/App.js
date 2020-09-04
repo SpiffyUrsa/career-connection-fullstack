@@ -20,6 +20,10 @@ import UserContext from "./UserContext";
  * Props
  * 
  */
+// CR: add a variable of the current token - pass that as the variable.
+//use one variable for initial token to use across the board
+//change the throw error to update page
+ 
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null);
@@ -33,16 +37,18 @@ function App() {
   useEffect(function handleTokenAndUser() {
 
     console.debug('Entered HandleTokenAndUser with token:', initialToken)
-    if (initialToken) localStorage.setItem('token', initialToken)
+    // if (initialToken) localStorage.setItem('token', initialToken)
     const lsToken = localStorage.getItem('token')
     JoblyApi.token = lsToken
+    
+    if (lsToken) getCurrentUser();
 
     async function getCurrentUser() {
       console.debug('Entered getCurrentUser with lsToken:', lsToken)
       console.debug('Entered getCurrentUser with token', initialToken);
       try {
         setIsLoading(true);
-        let username = JoblyApi.getTokenPayload(lsToken);
+        const username = JoblyApi.getTokenPayload(lsToken);
         const userResult = await JoblyApi.getUser(username);
         setCurrentUser(userResult)
         setIsLoading(false);
@@ -50,18 +56,12 @@ function App() {
         throw new Error('User not found')
       }
     }
-    if (lsToken) getCurrentUser();
   }, [initialToken])
 
   /**Handle Login Request*/
   async function login(username, password) {
-    try {
-      setIsLoading(true);
       const token = await JoblyApi.login(username, password);
       setInitialToken(token)
-    } catch (err) {
-      throw new Error('Login Failed')
-    }
   }
 
   /**Handle Register Request */

@@ -83,6 +83,7 @@ class JoblyApi {
   }
 
   /** Getting the payload from the token */
+  //TODO:Move things that are dealing with the token to the app
   static getTokenPayload(token) {
     let payload = jwt.decode(token);
     return payload.username;
@@ -94,6 +95,8 @@ class JoblyApi {
     let res = await this.request(`users/${username}`, {firstName, password, lastName, email}, 'patch');
     return res.user;
   }
+
+  /** */
 
 }
 
