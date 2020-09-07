@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Alert from './Alert'
+import Alert from '../common/Alert'
 import {useHistory} from "react-router-dom";
 
 /**

@@ -1,15 +1,15 @@
 import React, {useContext} from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Homepage from "./Homepage";
-import CompanyList from "./CompanyList";
-import CompanyDetail from "./CompanyDetail";
-import JobList from './JobList'
-import LoginForm from './LoginForm'
-import SignupForm from './SignupForm'
-import ProfileForm from './ProfileForm'
-import JoblyApi from "./api";
-import UserContext from "./UserContext";
-import ErrorPage from './ErrorPage';
+import Homepage from "../homepage/Homepage";
+import CompanyList from "../companies/CompanyList";
+import CompanyDetail from "../companies/CompanyDetail";
+import JobList from '../jobs/JobList'
+import LoginForm from '../auth/LoginForm'
+import SignupForm from '../auth/SignupForm'
+import ProfileForm from '../user/ProfileForm'
+import JoblyApi from "../api/api";
+import UserContext from "../user/UserContext";
+import ErrorPage from '../common/ErrorPage';
 
 /**
  * Routes all routes

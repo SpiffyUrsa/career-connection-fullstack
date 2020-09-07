@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import { Link } from 'react-router-dom'
-import UserContext from "./UserContext";
+import UserContext from "../user/UserContext";
 
 /**
  * Renders a different homepage based on logged in/out

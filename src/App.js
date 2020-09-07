@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import Routes from './Routes';
-import Navigation from './Navigation';
+import Routes from './routes-nav/Routes';
+import Navigation from './routes-nav/Navigation';
 import { BrowserRouter } from 'react-router-dom';
-import JoblyApi from './api.js'
-import UserContext from "./UserContext";
+import JoblyApi from './api/api.js'
+import UserContext from "./user/UserContext";
 
 /**
  * Renders App
@@ -26,6 +26,7 @@ import UserContext from "./UserContext";
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null);
+  const [applicationIds, setApplicationIds] = useState(new Set([]));
   const [initialToken, setInitialToken] = useState(localStorage.getItem('token'))
   const [isLoading, setIsLoading] = useState(initialToken !== null);
 
@@ -81,9 +82,21 @@ function App() {
     setCurrentUser(null);
   }
 
+  /** Checks if a job has been applied for. */
+  function hasAppliedToJob(id) {
+    return applicationIds.has(id);
+  }
+
+  /** Handle job application */
+  function applyToJob(id){
+    if (hasAppliedToJob(id)) return;
+    JoblyApi.applyToJob(currentUser.username, id)
+    setApplicationIds(new Set([...applicationIds, id]))
+  }
+
   const appDisplay = isLoading ? <h1>Is Loading...</h1> :
     <>
-      <UserContext.Provider value={currentUser}>
+      <UserContext.Provider value={{ currentUser, applyToJob }}>
         <Navigation logout={logout} />
         <Routes login={login} register={register} userEdit={userEdit} />
       </UserContext.Provider>

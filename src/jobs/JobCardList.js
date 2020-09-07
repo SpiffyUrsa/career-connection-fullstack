@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import JobCard from "./JobCard";
-import UserContext from "./UserContext";
+import UserContext from "../user/UserContext";
 
 
 /**
@@ -16,9 +16,8 @@ import UserContext from "./UserContext";
  */
 function JobCardList({ jobs }) {
 
-  //TODO: Need to finish application post
-  const user = useContext(UserContext);
-  const appliedJobIds = user.jobs ? user.jobs.map(job => job.id) : []
+  const { currentUser } = useContext(UserContext);
+  const appliedJobIds = currentUser.applications
 
   const jobsDisplay = jobs.length === 0 ?
     <h2> No current job openings </h2> : jobs.map(job =>
