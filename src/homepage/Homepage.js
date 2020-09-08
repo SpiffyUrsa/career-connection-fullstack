@@ -15,10 +15,10 @@ import UserContext from "../user/UserContext";
 
 function Homepage() {
 
-  const user = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
 
-  const welcomeMessage = user ?
-    <h1>Great to have you back, {user.firstName}!</h1> :
+  const welcomeMessage = currentUser ?
+    <h1>Great to have you back, {currentUser.firstName}!</h1> :
     <div>
       <h2>Please log in or register to view jobs!</h2>
       <Link to='/login'>Log in</Link>

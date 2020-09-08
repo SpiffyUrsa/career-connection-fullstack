@@ -33,7 +33,8 @@ import ErrorPage from '../common/ErrorPage';
 
 function Routes({login, register, userEdit }) {
 
-  const user = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
+  console.log('current user is:', currentUser)
   
   return (
     <div className='Routes'>
@@ -42,22 +43,22 @@ function Routes({login, register, userEdit }) {
             <Homepage />
           </Route>
           <Route exact path="/companies">
-            {user ? <CompanyList /> : <Redirect to='/login'/>}
+            {currentUser ? <CompanyList /> : <Redirect to='/login'/>}
           </Route>
           <Route exact path="/companies/:handle">
-            {user ? <CompanyDetail /> : <Redirect to='/login'/>}
+            {currentUser ? <CompanyDetail /> : <Redirect to='/login'/>}
           </Route>
           <Route exact path="/jobs">
-            {user ? <JobList /> : <Redirect to='/login'/>}
+            {currentUser ? <JobList /> : <Redirect to='/login'/>}
           </Route>
           <Route exact path="/login">
-            {user ? <Redirect to='/'/> : <LoginForm login={login}/>}
+            {currentUser ? <Redirect to='/'/> : <LoginForm login={login}/>}
           </Route>
           <Route exact path="/signup">
-            {user ? <Redirect to='/'/>  : <SignupForm register={register} />}
+            {currentUser ? <Redirect to='/'/>  : <SignupForm register={register} />}
           </Route>
           <Route exact path="/profile">
-            {user ? <ProfileForm userEdit={userEdit} /> : <Redirect to='/login'/>}
+            {currentUser ? <ProfileForm userEdit={userEdit} /> : <Redirect to='/login'/>}
           </Route>
           <Route>
             {/* <ErrorPage /> */}

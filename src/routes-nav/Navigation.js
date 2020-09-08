@@ -14,14 +14,15 @@ import UserContext from "../user/UserContext";
  */
 function Navigation({ logout }) {
 
-  const user = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
+  // console.log('user is', user);
 
-  const navDisplay = (user) ?
+  const navDisplay = (currentUser) ?
     <>
       <NavLink exact to='/companies'>Companies</NavLink>
       <NavLink exact to='/jobs'>Jobs</NavLink>
       <NavLink exact to='/profile'>Profile</NavLink>
-      <NavLink exact to='/' onClick={logout}>Log Out {user.username}</NavLink>
+      <NavLink exact to='/' onClick={logout}>Log Out {currentUser.username}</NavLink>
     </> :
     <>
       <NavLink exact to='/login'>Login</NavLink>
