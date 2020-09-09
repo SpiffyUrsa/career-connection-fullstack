@@ -40,7 +40,7 @@ function JobList() {
   const jobListDisplay = isLoading ? <h1>Loading jobs...</h1> : <JobCardList jobs={jobs} />
 
   return (
-    <div className='JobList'>
+    <div className="JobList col-md-8 offset-md-2">
       <SearchForm search={search} />
       {jobListDisplay}
     </div>

@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import { NavLink } from 'react-router-dom'
+import {Link, NavLink } from 'react-router-dom'
 import UserContext from "../user/UserContext";
 import "./Navigation.css";
 
@@ -44,11 +44,9 @@ function Navigation({ logout }) {
 
 
   return (
-    <nav className="Navigation">
-      <ul className="navbar-nav ml-auto">
-        <li className="nav-item mr-4">
-          <NavLink className="nav-link" exact to='/'>Career Connection</NavLink>
-        </li>
+    <nav className="Navigation navbar navbar-expand-md">
+        <Link className="navbar-brand" to="/">Career Connection</Link>
+      <ul className="navbar-nav ml-auto ">
         {navDisplay}
       </ul>
     </nav>

@@ -14,8 +14,9 @@ import UserContext from "./UserContext";
  */
 function ProfileForm({ userEdit }) {
 
-  const user = useContext(UserContext);
-  const [formData, setFormData] = useState({...user, password: ""});
+  const { currentUser } = useContext(UserContext);
+
+  const [formData, setFormData] = useState({...currentUser, password: ""});
   const [errorMessage, setErrorMessage] = useState('')
 
   const { username, password, firstName, lastName, email } = formData;
@@ -41,46 +42,65 @@ function ProfileForm({ userEdit }) {
   }
 
   return (
-    <div className='ProfileForm'>
+    <div className='col-md-8 offset-md-2'>
       <h1>Change your Profile</h1>
-      <form onSubmit={handleSubmit}>
+        <div className="card">
+          <div className="card-body">
+            <form onSubmit={handleSubmit}>
 
-        <label htmlFor='username'>Username:</label>
-        <input
-          name="username"
-          type='text'
-          value={username}
-          onChange={handleChange}
-          readOnly />
+              <div className="form-group">
+                <label htmlFor='username'>Username:</label>
+                <input
+                  name="username"
+                  type='text'
+                  value={username}
+                  onChange={handleChange}
+                  readOnly
+                  className='form-control'/>
+              </div>
 
-        <label htmlFor='firstName'>First Name:</label>
-        <input
-          name="firstName"
-          value={firstName}
-          onChange={handleChange} />
+              <div className="form-group">
+                <label htmlFor='firstName'>First Name:</label>
+                <input
+                  name="firstName"
+                  value={firstName}
+                  onChange={handleChange}
+                  className='form-control'/>
+              </div>
 
-        <label htmlFor='lastName'>Last Name:</label>
-        <input
-          name="lastName"
-          value={lastName}
-          onChange={handleChange} />
+              <div className="form-group">
+                <label htmlFor='lastName'>Last Name:</label>
+                <input
+                  name="lastName"
+                  value={lastName}
+                  onChange={handleChange}
+                  className='form-control'/>
+              </div>
 
-        <label htmlFor='email'>Email:</label>
-        <input
-          name="email"
-          value={email}
-          onChange={handleChange} />
+              <div className="form-group">
+                <label htmlFor='email'>Email:</label>
+                <input
+                  name="email"
+                  value={email}
+                  onChange={handleChange}
+                  className='form-control'/>
+              </div>
 
-        <label htmlFor='password'>Confirm password to make changes:</label>
-        <input
-          name="password"
-          type="password"
-          value={password}
-          onChange={handleChange} />
+              <div className="form-group">
+                <label htmlFor='password'>Confirm password to make changes:</label>
+                <input
+                  name="password"
+                  type="password"
+                  value={password}
+                  onChange={handleChange}
+                  className='form-control'/>
+              </div>
 
-        <button>Save Changes</button>
-      </form>
-      {errorMessage && <div>{errorMessage}</div>}
+              <button className="btn btn-primary btn-block mt-4">Save Changes</button>
+            </form>
+          </div>
+        </div>
+        {errorMessage && <div>{errorMessage}</div>}
     </div>
   )
 }

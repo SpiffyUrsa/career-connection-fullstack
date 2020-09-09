@@ -34,7 +34,6 @@ import ErrorPage from '../common/ErrorPage';
 function Routes({login, register, userEdit }) {
 
   const { currentUser } = useContext(UserContext);
-  console.log('current user is:', currentUser)
   
   return (
     <div className='Routes'>

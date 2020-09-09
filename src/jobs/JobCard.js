@@ -29,13 +29,18 @@ function JobCard({ id, title, salary, equity }) {
   // console.log('applications', currentUser.applications);
 
   return (
-    <div className='JobCard'>
-      <h3>{title}</h3>
-      <p>Salary: {salary}</p>
-      <p>Equity: {equity}</p>
-      <button onClick={apply} disabled={updatedApply}>
-        {updatedApply ? "Applied" : "Apply"}
-      </button>
+    <div className='JobCard card'>
+      <div className="card-body">
+        <h3 className="card-title">{title}</h3>
+        <p>Salary: {salary}</p>
+        <p>Equity: {equity}</p>
+        <button
+          className="btn btn-warning font-weight-bold text-uppercase float-right"
+          onClick={apply}
+          disabled={updatedApply}>
+          {updatedApply ? "Applied" : "Apply"}
+        </button>
+      </div>
     </div>
   )
 }

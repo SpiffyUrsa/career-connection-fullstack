@@ -35,14 +35,19 @@ function SearchForm({ search }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className='SearchForm'>
-      <input
-        name="searchTerm"
-        value={searchTerm}
-        placeholder="Enter search term.."
-        onChange={handleChange} />
-      <button>Search</button>
-    </form>
+    <div className="SearchForm mb-4 sticky-top">
+      <form onSubmit={handleSubmit} className="form-inline">
+        <input
+          name="searchTerm"
+          value={searchTerm}
+          placeholder="Enter search term.."
+          onChange={handleChange}
+          className = "form-control form-control-lg flex-grow-1" />
+        <button className="btn btn-lg btn-success">
+          Search
+        </button>
+      </form>
+    </div>
   )
 }
 

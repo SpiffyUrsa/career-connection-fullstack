@@ -48,7 +48,7 @@ function CompanyDetail() {
   const errorMessage = <h1>{error}</h1>
 
   return (
-    <div className='CompanyDetail'>
+    <div className="CompanyDetail col-md-8 offset-md-2">
       {error ? errorMessage : companyDetailDisplay}
     </div>
   )

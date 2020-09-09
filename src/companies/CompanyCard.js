@@ -15,14 +15,14 @@ import "./CompanyCard.css";
  */
 function CompanyCard({ handle, name, description, logoUrl }) {
 
-  const logoDisplay = logoUrl ? <img src={logoUrl} alt={name} /> : null;
+  const logoDisplay = logoUrl ? <img src={logoUrl} alt={name} className="float-right ml-5"/> : null;
 
   return (
-    <Link to={`/companies/${handle}`}>
-      <div className='CompanyCard'>
-        <h3>{name}</h3>
-        <p>{description}</p>
+    <Link className="CompanyCard card" to={`/companies/${handle}`}>
+      <div className='card-body'>
+        <h6 className='card-title'>{name}</h6>
         {logoDisplay}
+        <p><small>{description}</small></p>
       </div>
     </Link>
   )

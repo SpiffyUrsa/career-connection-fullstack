@@ -49,9 +49,11 @@ function CompanyList() {
       />);
 
   return (
-    <div className='CompanyList'>
+    <div className="CompanyList col-md-8 offset-md-2">
       <SearchForm search={search} />
-      {companiesDisplay}
+      <div className="CompanyList-list">
+        {companiesDisplay}
+      </div>
     </div>
   )
 }
