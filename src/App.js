@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
 import Routes from './routes-nav/Routes';
 import Navigation from './routes-nav/Navigation';
 import { BrowserRouter } from 'react-router-dom';
@@ -49,8 +48,9 @@ function App() {
       try {
         setIsLoading(true);
         const username = JoblyApi.getTokenPayload(lsToken);
-        const userResult = await JoblyApi.getUser(username);
-        setCurrentUser(userResult)
+        const currentUser = await JoblyApi.getUser(username);
+        setCurrentUser(currentUser)
+        setApplicationIds(new Set(currentUser.applications))
         setIsLoading(false);
       } catch (err) {
         throw new Error('User not found')
@@ -88,15 +88,17 @@ function App() {
   }
 
   /** Handle job application */
-  function applyToJob(id){
+  async function applyToJob(id){
+    console.log('applied to job')
     if (hasAppliedToJob(id)) return;
-    JoblyApi.applyToJob(currentUser.username, id)
+    await JoblyApi.applyToJob(currentUser.username, id)
+    console.log('finished API Call')
     setApplicationIds(new Set([...applicationIds, id]))
   }
 
   const appDisplay = isLoading ? <h1>Is Loading...</h1> :
     <>
-      <UserContext.Provider value={{ currentUser, applyToJob }}>
+      <UserContext.Provider value={{ currentUser, applyToJob, hasAppliedToJob }}>
         <Navigation logout={logout} />
         <Routes login={login} register={register} userEdit={userEdit} />
       </UserContext.Provider>

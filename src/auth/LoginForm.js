@@ -44,27 +44,33 @@ function LoginForm({login}) {
 
   return (
     <div className='LoginForm'>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        
-        <label htmlFor = 'username'>Username:</label>
-        <input 
-          name="username" 
-          value = {username} 
-          placeholder="username"
-          onChange={handleChange} />
+      <div className="container col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+        <h1 className="mb-3">Log In</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor = 'username'>Username:</label>
+            <input
+              className="form-control"
+              name="username" 
+              value = {username} 
+              placeholder="username"
+              onChange={handleChange} />
+          </div>
+          <div className='form-group'>
+            <label htmlFor = 'password'>Password:</label>
+            <input
+              className="form-control"
+              name="password"
+              type="password" 
+              value = {password} 
+              placeholder="password"
+              onChange={handleChange} />
+          </div>
+          <button className="btn btn-primary">Submit</button>
+        </form>
+        {errorMessage && <div>{errorMessage}</div>}
 
-        <label htmlFor = 'password'>Password:</label>
-        <input 
-          name="password"
-          type="password" 
-          value = {password} 
-          placeholder="password"
-          onChange={handleChange} />
-
-        <button>Login</button>
-      </form>
-      {errorMessage && <div>{errorMessage}</div>}
+      </div>
     </div>
   )
 }

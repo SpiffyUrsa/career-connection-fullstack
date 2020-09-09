@@ -47,42 +47,55 @@ function SignupForm({register}) {
 
   return (
     <div className='SignupForm'>
-      <h1>Sign up!</h1>
-      <form onSubmit={handleSubmit}>
-        
-        <label htmlFor = 'username'>Username:</label>
-        <input 
-          name="username" 
-          value = {username} 
-          onChange={handleChange} />
-
-        <label htmlFor = 'password'>Password:</label>
-        <input 
-          name="password"
-          type="password" 
-          value = {password} 
-          onChange={handleChange} />
-        
-        <label htmlFor = 'firstName'>First Name:</label>
-        <input 
-          name="firstName" 
-          value = {firstName}
-          onChange={handleChange} />
-
-        <label htmlFor = 'lastName'>Last Name:</label>
-        <input 
-          name="lastName" 
-          value = {lastName} 
-          onChange={handleChange} />
-
-        <label htmlFor = 'email'>Email:</label>
-        <input 
-          name="email" 
-          value = {email} 
-          onChange={handleChange} />
-        <button>Submit</button>
-      </form>
-      {errorMessage && <div>{errorMessage}</div>}
+      <div className="container col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+        <h1 className="mb-3">Sign up!</h1>
+        <form onSubmit={handleSubmit}>
+          <div className='form-group'>
+            <label htmlFor = 'username'>Username:</label>
+            <input
+              className="form-control" 
+              name="username" 
+              value = {username} 
+              onChange={handleChange} />
+          </div>
+          <div className='form-group'>
+            <label htmlFor = 'password'>Password:</label>
+            <input
+              className="form-control"
+              name="password"
+              type="password" 
+              value = {password} 
+              onChange={handleChange} />
+          </div>
+          <div className='form-group'>
+            <label htmlFor = 'firstName'>First Name:</label>
+            <input 
+              className="form-control"
+              name="firstName" 
+              value = {firstName}
+              onChange={handleChange} />
+          </div>
+          <div className='form-group'>
+            <label htmlFor = 'lastName'>Last Name:</label>
+            <input
+              className="form-control"
+              name="lastName" 
+              value = {lastName} 
+              onChange={handleChange} />
+          </div>
+          <div>
+            <label htmlFor = 'email'>Email:</label>
+            <input
+              className="form-control"
+              name="email" 
+              value = {email} 
+              onChange={handleChange} />
+          </div>
+          <button>Submit</button>
+        </form>
+        {errorMessage && <div>{errorMessage}</div>}
+      
+      </div>
     </div>
   )
 }

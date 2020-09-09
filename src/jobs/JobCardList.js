@@ -16,9 +16,6 @@ import UserContext from "../user/UserContext";
  */
 function JobCardList({ jobs }) {
 
-  const { currentUser } = useContext(UserContext);
-  const appliedJobIds = currentUser.applications
-
   const jobsDisplay = jobs.length === 0 ?
     <h2> No current job openings </h2> : jobs.map(job =>
       <JobCard
@@ -27,7 +24,6 @@ function JobCardList({ jobs }) {
         salary={job.salary}
         equity={job.equity}
         key={job.id}
-        applied={appliedJobIds.includes(job.id)}
       />)
 
   return (
