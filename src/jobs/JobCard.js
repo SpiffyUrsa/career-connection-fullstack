@@ -1,5 +1,4 @@
-import React, {useState, useContext, useEffect} from "react";
-import JoblyApi from '../api/api.js'
+import React, {useState, useContext} from "react";
 import UserContext from "../user/UserContext";
 import "./JobCard.css";
 import { addCommas } from '../common/calculations'

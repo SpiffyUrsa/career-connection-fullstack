@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot with no jobs 1`] = `
+<DocumentFragment>
+  <div>
+    <h2>
+       No current job openings 
+    </h2>
+  </div>
+</DocumentFragment>
+`;

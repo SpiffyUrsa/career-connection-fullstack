@@ -1,7 +1,5 @@
-import React, {useContext} from "react";
+import React from "react";
 import JobCard from "./JobCard";
-import UserContext from "../user/UserContext";
-
 
 /**
  * Renders details about all applicable jobs
@@ -16,7 +14,7 @@ import UserContext from "../user/UserContext";
  */
 function JobCardList({ jobs }) {
 
-  const jobsDisplay = jobs.length === 0 ?
+  const jobsDisplay = !jobs ?
     <h2> No current job openings </h2> : jobs.map(job =>
       <JobCard
         id={job.id}

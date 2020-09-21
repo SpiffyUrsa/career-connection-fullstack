@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Redirect } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import JobCardList from "../jobs/JobCardList";
 import JoblyApi from "../api/api.js";
 
@@ -21,7 +21,7 @@ function CompanyDetail() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const { handle: companyHandle, name, description, numEmployees, logoUrl, jobs } = company;
+  const { name, description, jobs } = company;
 
   useEffect(function getCompanyDataOnMount() {
     async function getCompanyData() {
