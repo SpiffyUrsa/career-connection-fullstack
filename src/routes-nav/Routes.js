@@ -7,28 +7,26 @@ import JobList from '../jobs/JobList'
 import LoginForm from '../auth/LoginForm'
 import SignupForm from '../auth/SignupForm'
 import ProfileForm from '../user/ProfileForm'
-import JoblyApi from "../api/api";
 import UserContext from "../user/UserContext";
-import ErrorPage from '../common/ErrorPage';
 
 /**
  * Routes all routes
  * 
  * App --> {Navigation, Routes} -->
- * 
- * route / --> Homepage
- * route /companies --> CompanyList
- * route /companies/:handle --> CompanyDetail
- * route /jobs --> JobList
- * route /login --> LoginForm
- * route /signup --> SignupForm
- * route /profile --> ProfileForm
+ *  '/' --> Homepage
+ *  '/companies' --> CompanyList
+ *  '/companies/:handle' --> CompanyDetail
+ *  '/jobs' --> JobList
+ *  '/login' --> LoginForm
+ *  '/signup' --> SignupForm
+ *  '/profile' --> ProfileForm
  * 
  * State
  * 
  * Props
- *  - login (function)
- *  - register (function)
+ *  - login (fn)
+ *  - register (fn)
+ *  - userEdit (fn)
  */
 
 function Routes({login, register, userEdit }) {
@@ -59,11 +57,7 @@ function Routes({login, register, userEdit }) {
           <Route exact path="/profile">
             {currentUser ? <ProfileForm userEdit={userEdit} /> : <Redirect to='/login'/>}
           </Route>
-          <Route>
-            {/* <ErrorPage /> */}
-            Got Here
-          </Route>
-          {/* <Redirect to="/" /> */}
+          <Redirect to="/" />
         </Switch>
     </div>
   )

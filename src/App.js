@@ -4,7 +4,9 @@ import Navigation from './routes-nav/Navigation';
 import { BrowserRouter } from 'react-router-dom';
 import JoblyApi from './api/api.js'
 import UserContext from "./user/UserContext";
+import jwt from "jsonwebtoken";
 
+export const TOKEN_STORAGE_ID = "token";
 /**
  * Renders App
  * 
@@ -19,14 +21,12 @@ import UserContext from "./user/UserContext";
  * Props
  * 
  */
-// CR: add a variable of the current token - pass that as the variable.
-//use one variable for initial token to use across the board
  
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null);
   const [applicationIds, setApplicationIds] = useState(new Set([]));
-  const [initialToken, setInitialToken] = useState(localStorage.getItem('token'))
+  const [initialToken, setInitialToken] = useState(localStorage.getItem(TOKEN_STORAGE_ID))
   const [isLoading, setIsLoading] = useState(initialToken !== null);
 
   /**Each time the token is updated,
@@ -36,18 +36,17 @@ function App() {
   useEffect(function handleTokenAndUser() {
     console.debug('Entered HandleTokenAndUser with token:', initialToken)
 
-    if (initialToken) localStorage.setItem('token', initialToken)
-    const lsToken = localStorage.getItem('token')
+    if (initialToken) localStorage.setItem(TOKEN_STORAGE_ID, initialToken)
+    const lsToken = localStorage.getItem(TOKEN_STORAGE_ID)
     JoblyApi.token = lsToken
     
     if (lsToken) getCurrentUser();
 
     async function getCurrentUser() {
-      console.debug('Entered getCurrentUser with lsToken:', lsToken)
       console.debug('Entered getCurrentUser with token', initialToken);
       try {
         setIsLoading(true);
-        const username = JoblyApi.getTokenPayload(lsToken);
+        const username = getTokenPayload(lsToken);
         const currentUser = await JoblyApi.getUser(username);
         setCurrentUser(currentUser)
         setApplicationIds(new Set(currentUser.applications))
@@ -78,7 +77,7 @@ function App() {
 
   /**Handle Logout */
   function logout() {
-    localStorage.removeItem('token')
+    localStorage.removeItem(TOKEN_STORAGE_ID)
     setCurrentUser(null);
   }
 
@@ -89,11 +88,16 @@ function App() {
 
   /** Handle job application */
   async function applyToJob(id){
-    console.log('applied to job')
+    // console.log('applied to job')
     if (hasAppliedToJob(id)) return;
     await JoblyApi.applyToJob(currentUser.username, id)
-    console.log('finished API Call')
     setApplicationIds(new Set([...applicationIds, id]))
+  }
+
+  /** Get payload from token */
+  function getTokenPayload(token) {
+    let payload = jwt.decode(token);
+    return payload.username;
   }
 
   const appDisplay = isLoading ? <h1>Is Loading...</h1> :

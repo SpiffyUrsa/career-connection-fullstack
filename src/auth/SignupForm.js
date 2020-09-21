@@ -91,7 +91,7 @@ function SignupForm({register}) {
               value = {email} 
               onChange={handleChange} />
           </div>
-          <button>Submit</button>
+          <button className="btn btn-primary">Submit</button>
         </form>
         {errorMessage && <div>{errorMessage}</div>}
       
