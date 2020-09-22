@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {useHistory} from "react-router-dom";
+import Alert from '../common/Alert'
 
 /**
  * Renders signup form
@@ -19,7 +20,7 @@ function SignupForm({register}) {
       lastName:"", 
       email:""
     });
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessages, setErrorMessages] = useState([])
   const history = useHistory();
   const { username, password, firstName, lastName, email } = formData;
 
@@ -40,7 +41,7 @@ function SignupForm({register}) {
       history.push("/");
     }
     catch (err) {
-      err.forEach(e => setErrorMessage(m => m+=e))
+      setErrorMessages(err)
     }
   }
 
@@ -92,8 +93,11 @@ function SignupForm({register}) {
           </div>
           <button className="btn btn-primary">Submit</button>
         </form>
-        {errorMessage && <div>{errorMessage}</div>}
-      
+        <div>
+          {errorMessages.length ?
+            <Alert messages={errorMessages}/> :
+            null }
+        </div>
       </div>
     </div>
   )

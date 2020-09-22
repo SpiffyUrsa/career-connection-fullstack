@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import UserContext from "./UserContext";
 import {useHistory} from 'react-router-dom'
+import Alert from '../common/Alert'
 
 /**
  * Renders Profile form
@@ -18,7 +19,7 @@ function ProfileForm({ userEdit }) {
   const history = useHistory()
 
   const [formData, setFormData] = useState({...currentUser, password: ""});
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessages, setErrorMessages] = useState([])
 
   const { username, password, firstName, lastName, email } = formData;
 
@@ -39,8 +40,7 @@ function ProfileForm({ userEdit }) {
       history.push('/')
     }
     catch (err) {
-      console.log('We found an error')
-      err.forEach(e => setErrorMessage(m => m+=e))
+      setErrorMessages(err)
     }
   }
 
@@ -101,9 +101,13 @@ function ProfileForm({ userEdit }) {
 
               <button className="btn btn-primary btn-block mt-4">Save Changes</button>
             </form>
+            <div>
+              {errorMessages.length ?
+                <Alert messages={errorMessages}/> :
+                null }
+            </div>
           </div>
         </div>
-        {errorMessage && <div>{errorMessage}</div>}
     </div>
   )
 }

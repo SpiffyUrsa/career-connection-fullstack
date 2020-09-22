@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {useHistory} from 'react-router-dom'
+import Alert from '../common/Alert'
 
 /**
  * Renders login form
@@ -14,7 +15,7 @@ import {useHistory} from 'react-router-dom'
 function LoginForm({login}) {
   
   const [formData, setFormData] = useState({username: "", password:""});
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessages, setErrorMessages] = useState([])
 
   const history = useHistory()
 
@@ -37,7 +38,7 @@ function LoginForm({login}) {
       await login(username, password)
       history.push('/')
     } catch(err){
-      err.forEach(e => setErrorMessage(m => m+=e))
+      setErrorMessages(err)
     }
   }
 
@@ -67,8 +68,11 @@ function LoginForm({login}) {
           </div>
           <button className="btn btn-primary">Submit</button>
         </form>
-        {errorMessage && <div>{errorMessage}</div>}
-
+        <div>
+          {errorMessages.length ?
+            <Alert messages={errorMessages}/> :
+            null }
+        </div>
       </div>
     </div>
   )
