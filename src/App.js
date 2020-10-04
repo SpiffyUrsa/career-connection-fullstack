@@ -100,7 +100,7 @@ function App() {
     return payload.username;
   }
 
-  const appDisplay = isLoading ? <h1>Is Loading...</h1> :
+  const appDisplay = isLoading ? <h1>Loading. Thank you for your patience.</h1> :
     <>
       <UserContext.Provider value={{ currentUser, applyToJob, hasAppliedToJob }}>
         <Navigation logout={logout} />
