@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="CompanyDetail col-md-8 offset-md-2"
+  >
+    <h1>
+      Company Details Loading...
+    </h1>
+  </div>
+</DocumentFragment>
+`;
