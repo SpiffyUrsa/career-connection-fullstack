@@ -1,4 +1,4 @@
-# Career Connection - Frontend
+# Career Connection
 
 ## Overview
 - Application acts as a recruiting tool for users to browse available jobs by title or company. Users can login, sign up, or, if they've previously visited the site, their information is saved in local storage. Users can search by job or company and apply to relevant jobs. Each user has their own profile they can update and save. All information and actions are collected and saved on the backend.
@@ -39,6 +39,10 @@ App --> {
 1. `cd frontend` from base directory
 2. `npm install`
 3. `npm start`
+
+### Running the tests:
+1. `npm test` from frontend directory to run frontend tests.
+2. `npm test` from backend directory to run backend tests.
 
 ## Tech Stack
 ### Backend
