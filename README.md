@@ -62,5 +62,5 @@ App --> {
 
 Note: This was a pair project at Rithm. The backend and frontend were separate projects. I created a backend
 separately (see https://github.com/SpiffyUrsa/jobly-backend), but this particular version was focused on building the front end with React. The frontend was
-entirely built by my programming partner and I. The backend is optimized code graciously provided 
+entirely built by my programming partner and I and the backend is code graciously provided 
 by Rithm staff.
